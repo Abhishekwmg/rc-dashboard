@@ -1,1 +1,25 @@
 @import "tailwindcss";
+
+:root[data-theme="light"] {
+    --bg-color: #ffffff;
+    --text-color: #111827;
+    --header-bg: #f9fafb;
+    --border-color: #e5e7eb;
+}
+
+:root[data-theme="dark"] {
+    --bg-color: #0f172a;
+    --text-color: #e5e7eb;
+    --header-bg: #020617;
+    --border-color: #1e293b;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+header {
+    background-color: var(--header-bg);
+    border-bottom: 1px solid var(--border-color);
+}

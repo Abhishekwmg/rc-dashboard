@@ -5,6 +5,7 @@ const AddLeadModal = ({ open, onClose, onAdd }) => {
     name: "",
     company: "",
     email: "",
+    capital: "",
     status: "New",
   });
 
@@ -17,7 +18,7 @@ const AddLeadModal = ({ open, onClose, onAdd }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     onAdd(form);
-    setForm({ name: "", company: "", email: "", status: "New" });
+    setForm({ name: "", company: "", email: "", capital: "", status: "New" });
     onClose();
   };
 
@@ -33,6 +34,7 @@ const AddLeadModal = ({ open, onClose, onAdd }) => {
         <h2 className="text-xl font-semibold mb-4">Add New Lead</h2>
         <form onSubmit={handleSubmit} className="space-y-3">
           <input
+            type="text"
             name="name"
             placeholder="Name"
             value={form.name}
@@ -42,6 +44,7 @@ const AddLeadModal = ({ open, onClose, onAdd }) => {
             style={{ borderColor: "var(--border-color)" }}
           />
           <input
+            type="text"
             name="company"
             placeholder="Company"
             value={form.company}
@@ -51,9 +54,20 @@ const AddLeadModal = ({ open, onClose, onAdd }) => {
             style={{ borderColor: "var(--border-color)" }}
           />
           <input
+            type="email"
             name="email"
             placeholder="Email"
             value={form.email}
+            onChange={handleChange}
+            required
+            className="w-full p-2 rounded border bg-transparent"
+            style={{ borderColor: "var(--border-color)" }}
+          />
+          <input
+            type="number"
+            name="capital"
+            placeholder="Value"
+            value={form.capital}
             onChange={handleChange}
             required
             className="w-full p-2 rounded border bg-transparent"

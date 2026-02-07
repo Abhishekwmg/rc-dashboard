@@ -13,13 +13,20 @@ const KPISection = ({
   totalCustomers,
   activeProjects,
   pendingTasks,
+  totalBudget,
+  totalReceived,
+  activeVendors,
 }) => {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+    <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-7 gap-4 mb-8">
       <KPICard label="Total Leads" value={totalLeads} />
       <KPICard label="Customers" value={totalCustomers} />
       <KPICard label="Active Projects" value={activeProjects} />
       <KPICard label="Pending Tasks" value={pendingTasks} />
+
+      <KPICard label="Total Budget" value={`$${totalBudget}`} />
+      <KPICard label="Payment Received" value={`$${totalReceived}`} />
+      <KPICard label="Active Vendors" value={activeVendors} />
     </div>
   );
 };

@@ -10,6 +10,7 @@ import Vendors from "./pages/Vendors";
 import Login from "./pages/Login";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import NotFound from "./pages/NotFound";
+import ProjectDetails from "./pages/ProjectDetails";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
           {
             path: "projects",
             element: <Projects />,
+          },
+          {
+            path: "projects/:id",
+            element: <ProjectDetails />,
           },
           {
             path: "vendors",

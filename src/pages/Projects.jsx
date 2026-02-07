@@ -1,19 +1,16 @@
 import ProjectCard from "../components/projects/ProjectCard";
 import { useState } from "react";
-import { projects as initialProjects } from "../data/dummyData";
+import { useSelector } from "react-redux";
 import AddProjectModal from "../components/projects/AddProjectModal";
+import { selectProjects } from "../store/slices/projectsSlice";
 
 const Projects = () => {
-  const [projects, setProjects] = useState(initialProjects);
+  const projects = useSelector(selectProjects); // ✅ Redux store
   const [filter, setFilter] = useState("All");
   const [openAddProject, setOpenAddProject] = useState(false);
 
   const filteredProjects =
     filter === "All" ? projects : projects.filter((p) => p.status === filter);
-
-  const handleAddProject = (newProject) => {
-    setProjects([...projects, { id: Date.now(), ...newProject }]);
-  };
 
   return (
     <div className="p-6 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-6">
@@ -31,12 +28,14 @@ const Projects = () => {
         >
           + Add New Project
         </button>
+
+        {/* Connect modal to Redux */}
         <AddProjectModal
           open={openAddProject}
           onClose={() => setOpenAddProject(false)}
-          onAdd={handleAddProject}
         />
 
+        {/* Filters */}
         <div className="space-y-2">
           <button
             onClick={() => setFilter("All")}
@@ -92,6 +91,12 @@ const Projects = () => {
         {filteredProjects.map((p) => (
           <ProjectCard key={p.id} project={p} />
         ))}
+
+        {filteredProjects.length === 0 && (
+          <p className="col-span-full text-center opacity-60">
+            No projects found
+          </p>
+        )}
       </div>
     </div>
   );

@@ -11,11 +11,9 @@ import {
 const Footer = () => {
   const footerNav = [
     ["Dashboard", "/"],
-    ["Activities", "/activities"],
-    ["Customers", "/customer"],
+    ["Contact", "/contact"],
     ["Leads", "/leads"],
     ["Projects", "/projects"],
-    ["Vendors", "/vendors"],
   ];
   const footerLegal = [
     "Privacy Policy",

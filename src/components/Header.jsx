@@ -1,13 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
-import {
-  LayoutDashboard,
-  Rotate3d,
-  CircleUserRound,
-  Moon,
-  Sun,
-  Menu,
-  X,
-} from "lucide-react";
+import { Rotate3d, CircleUserRound, Moon, Sun, Menu, X } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../hooks/useTheme";
 import Clock from "./Clock";
@@ -24,11 +16,9 @@ const Header = () => {
 
   const navItems = [
     ["Dashboard", "/"],
-    ["Activities", "activities"],
-    ["Customer", "customer"],
+    ["Contact", "contact"],
     ["Leads", "leads"],
     ["Projects", "projects"],
-    ["Vendors", "vendors"],
   ];
 
   return (

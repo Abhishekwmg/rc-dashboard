@@ -15,57 +15,6 @@ export const leads = [
   },
 ];
 
-export const customers = [
-  {
-    id: 1,
-    name: "Jane Doe",
-    company: "Orbit Solutions",
-    email: "jane@orbit.com",
-  },
-];
-
-export const activities = [
-  {
-    id: 1,
-    type: "Call",
-    description: "Follow up with John",
-    due: "2026-02-07",
-  },
-  {
-    id: 2,
-    type: "Meeting",
-    description: "Discuss project scope with Alice",
-    due: "2026-02-08",
-  },
-];
-
-export const vendors = [
-  {
-    id: 1,
-    name: "Google",
-    mobile: "1201010101",
-    email: "chris.fox@google.com",
-    country: "USA",
-    status: "Active",
-  },
-  {
-    id: 2,
-    name: "Twitter",
-    mobile: "1201010101",
-    email: "twet.hen@twitter.com",
-    country: "USA",
-    status: "Active",
-  },
-  {
-    id: 3,
-    name: "Facebook",
-    mobile: "1201010101",
-    email: "mark.zukk@meta.com",
-    country: "USA",
-    status: "Active",
-  },
-];
-
 export const projects = [
   {
     id: 1,

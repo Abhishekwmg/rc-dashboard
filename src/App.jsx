@@ -1,12 +1,10 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Layout from "./pages/Layout";
-import Activities from "./pages/Activities";
-import Customer from "./pages/Customer";
+import Contact from "./pages/Contact";
 import Dashboard from "./pages/Dashboard";
 import Leads from "./pages/Leads";
 import Projects from "./pages/Projects";
-import Vendors from "./pages/Vendors";
 import Login from "./pages/Login";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import NotFound from "./pages/NotFound";
@@ -33,12 +31,8 @@ const router = createBrowserRouter([
             element: <Dashboard />,
           },
           {
-            path: "activities",
-            element: <Activities />,
-          },
-          {
-            path: "customer",
-            element: <Customer />,
+            path: "contact",
+            element: <Contact />,
           },
           {
             path: "leads",
@@ -51,10 +45,6 @@ const router = createBrowserRouter([
           {
             path: "projects/:id",
             element: <ProjectDetails />,
-          },
-          {
-            path: "vendors",
-            element: <Vendors />,
           },
           {
             path: "*",

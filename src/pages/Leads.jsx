@@ -1,39 +1,22 @@
 import { useState } from "react";
-import { leads as initialLeads } from "../data/dummyData";
+import { useSelector, useDispatch } from "react-redux";
 import AddLeadModal from "../components/leads/AddLeadModal";
+import { selectLeads, deleteLead } from "../store/slices/leadsSlice";
 
 const Leads = () => {
-  const [leads, setLeads] = useState(
-    initialLeads.map((l) => ({
-      ...l,
-      date: l.date || "2026-02-01",
-      value: l.value || 5000,
-    })),
-  );
+  const dispatch = useDispatch();
+  const leads = useSelector(selectLeads); // ✅ get leads from Redux
   const [search, setSearch] = useState("");
   const [openAddLead, setOpenAddLead] = useState(false);
+
   const filteredLeads = leads.filter((lead) =>
     `${lead.name} ${lead.company} ${lead.email}`
       .toLowerCase()
       .includes(search.toLowerCase()),
   );
-  const handleDelete = (id) => {
-    setLeads((prev) => prev.filter((l) => l.id !== id));
-  };
 
-  // const handleAddLead = (lead) => {
-  //   setLeads((prev) => [...prev, { id: Date.now(), ...lead }]);
-  // };
-  const handleAddLead = (lead) => {
-    setLeads((prev) => [
-      ...prev,
-      {
-        id: Date.now(),
-        ...lead,
-        date: new Date().toISOString().split("T")[0],
-        value: 0,
-      },
-    ]);
+  const handleDelete = (id) => {
+    dispatch(deleteLead(id)); // ✅ delete via Redux
   };
 
   return (
@@ -57,9 +40,9 @@ const Leads = () => {
         <AddLeadModal
           open={openAddLead}
           onClose={() => setOpenAddLead(false)}
-          onAdd={handleAddLead}
         />
       </div>
+
       {/* Leads Table */}
       <div className="card overflow-x-auto">
         <table className="w-full text-sm">
@@ -103,7 +86,6 @@ const Leads = () => {
                 </td>
               </tr>
             ))}
-
             {filteredLeads.length === 0 && (
               <tr>
                 <td colSpan="6" className="p-6 text-center opacity-60">

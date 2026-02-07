@@ -1,101 +1,41 @@
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Tooltip,
-  Legend,
-} from "chart.js";
-import { Bar } from "react-chartjs-2";
-import { dashboardStats } from "../../data/dummyData";
-
-// Register Chart.js components (REQUIRED)
-ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
-
-// const LeadFunnelChart = () => {
-//   const data = {
-//     labels: ["Leads", "Contacted", "Qualified", "Customers"],
-//     datasets: [
-//       {
-//         label: "Lead Funnel",
-//         data: [
-//           dashboardStats.leadFunnel.leads,
-//           dashboardStats.leadFunnel.contacted,
-//           dashboardStats.leadFunnel.qualified,
-//           dashboardStats.leadFunnel.customers,
-//         ],
-//         backgroundColor: "#6366f1",
-//         borderRadius: 6,
-//       },
-//     ],
-//   };
-
-//   const options = {
-//     responsive: true,
-//     plugins: {
-//       legend: { display: false },
-//     },
-//   };
-
-//   return (
-//     <div
-//       className="p-4 rounded-xl border"
-//       style={{ borderColor: "var(--border-color)" }}
-//     >
-//       <h3 className="text-lg font-semibold mb-3">Lead Funnel</h3>
-//       <Bar data={data} options={options} />
-//     </div>
-//   );
-// };
+import { useSelector } from "react-redux";
+import KPIChartCard from "../dashboard/KPIChartCard"; // optional for sparkline
+import Chart from "react-apexcharts";
+import { selectLeads } from "../../store/slices/leadsSlice";
 
 const LeadFunnelChart = () => {
-  const root = document.documentElement;
-  const textColor = getComputedStyle(root).getPropertyValue("--text-color");
-  const borderColor = getComputedStyle(root).getPropertyValue("--border-color");
+  const leads = useSelector(selectLeads);
 
-  const data = {
-    labels: ["Leads", "Contacted", "Qualified", "Customers"],
-    datasets: [
-      {
-        label: "Lead Funnel",
-        data: [
-          dashboardStats.leadFunnel.leads,
-          dashboardStats.leadFunnel.contacted,
-          dashboardStats.leadFunnel.qualified,
-          dashboardStats.leadFunnel.customers,
-        ],
-        backgroundColor: "#6366f1",
-        borderRadius: 6,
-      },
-    ],
+  // Compute funnel counts
+  const funnelCounts = {
+    New: leads.filter((l) => l.status === "New").length,
+    Contacted: leads.filter((l) => l.status === "Contacted").length,
+    Qualified: leads.filter((l) => l.status === "Qualified").length,
+    Customers: leads.filter((l) => l.status === "Customer").length || 0,
   };
 
   const options = {
-    responsive: true,
-    plugins: {
-      legend: { display: false },
-    },
-    scales: {
-      x: {
-        ticks: { color: textColor },
-        grid: { color: borderColor },
-      },
-      y: {
-        ticks: { color: textColor },
-        grid: { color: borderColor },
-      },
+    chart: { type: "bar", toolbar: { show: false } },
+    plotOptions: { bar: { borderRadius: 6 } },
+    dataLabels: { enabled: false },
+    xaxis: {
+      categories: ["Leads", "Contacted", "Qualified", "Customers"],
     },
   };
 
-  return (
-    <div
-      className="p-4 rounded-xl border"
-      style={{ borderColor: "var(--border-color)" }}
-    >
-      <h3 className="text-lg font-semibold mb-3">Lead Funnel</h3>
-      <Bar data={data} options={options} />
-    </div>
-  );
+  const series = [
+    {
+      name: "Lead Funnel",
+      data: [
+        funnelCounts.New,
+        funnelCounts.Contacted,
+        funnelCounts.Qualified,
+        funnelCounts.Customers,
+      ],
+    },
+  ];
+
+  return <Chart options={options} series={series} type="bar" height={250} />;
 };
 
 export default LeadFunnelChart;

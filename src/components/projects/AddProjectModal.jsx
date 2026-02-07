@@ -1,13 +1,17 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addProject } from "../../store/slices/projectsSlice";
 
-const AddProjectModal = ({ open, onClose, onAdd }) => {
+const AddProjectModal = ({ open, onClose }) => {
+  const dispatch = useDispatch();
+
   const [form, setForm] = useState({
     title: "",
     description: "",
     status: "Upcoming",
     progress: 0,
     due: "",
-    budget: "",
+    budget: 0,
   });
 
   if (!open) return null;
@@ -17,21 +21,25 @@ const AddProjectModal = ({ open, onClose, onAdd }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onAdd({
-      ...form,
-      progress: Number(form.progress),
-      budget: Number(form.budget),
-    });
-    //alert("Project added successfuully");
-    onClose();
+
+    dispatch(
+      addProject({
+        ...form,
+        progress: Number(form.progress),
+        budget: Number(form.budget),
+      }),
+    );
+
+    // Reset form and close modal
     setForm({
       title: "",
       description: "",
       status: "Upcoming",
       progress: 0,
       due: "",
-      budget: "",
+      budget: 0,
     });
+    onClose();
   };
 
   return (
@@ -49,39 +57,47 @@ const AddProjectModal = ({ open, onClose, onAdd }) => {
           <input
             name="title"
             placeholder="Project Title"
+            value={form.title}
             onChange={handleChange}
             className="w-full p-2 border rounded bg-transparent"
           />
           <textarea
             name="description"
             placeholder="Description"
+            value={form.description}
             onChange={handleChange}
             className="w-full p-2 border rounded bg-transparent"
           />
           <select
             name="status"
+            value={form.status}
             onChange={handleChange}
             className="w-full p-2 border rounded bg-transparent"
           >
             <option>Upcoming</option>
             <option>In Progress</option>
+            <option>Completed</option>
           </select>
           <input
             name="progress"
             type="number"
             placeholder="Progress %"
+            value={form.progress}
             onChange={handleChange}
             className="w-full p-2 border rounded bg-transparent"
           />
           <input
             name="due"
             placeholder="Due Date"
+            value={form.due}
             onChange={handleChange}
             className="w-full p-2 border rounded bg-transparent"
           />
           <input
             name="budget"
+            type="number"
             placeholder="Budget"
+            value={form.budget}
             onChange={handleChange}
             className="w-full p-2 border rounded bg-transparent"
           />

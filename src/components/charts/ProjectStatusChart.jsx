@@ -1,47 +1,30 @@
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { Doughnut } from "react-chartjs-2";
-import { dashboardStats } from "../../data/dummyData";
-
-ChartJS.register(ArcElement, Tooltip, Legend);
+import { useSelector } from "react-redux";
+import Chart from "react-apexcharts";
+import { selectProjects } from "../../store/slices/projectsSlice";
 
 const ProjectStatusChart = () => {
-  const root = document.documentElement;
-  const textColor = getComputedStyle(root).getPropertyValue("--text-color");
+  const projects = useSelector(selectProjects);
 
-  const data = {
-    labels: ["Upcoming", "In Progress", "Completed"],
-    datasets: [
-      {
-        data: [
-          dashboardStats.projectStatus.upcoming,
-          dashboardStats.projectStatus.inProgress,
-          dashboardStats.projectStatus.completed,
-        ],
-        backgroundColor: ["#f59e0b", "#6366f1", "#22c55e"],
-        borderWidth: 0,
-      },
-    ],
+  const statusCounts = {
+    Upcoming: projects.filter((p) => p.status === "Upcoming").length,
+    "In Progress": projects.filter((p) => p.status === "In Progress").length,
+    Completed: projects.filter((p) => p.status === "Completed").length,
   };
 
   const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "bottom",
-        labels: { color: textColor },
-      },
-    },
+    chart: { type: "donut" },
+    labels: ["Upcoming", "In Progress", "Completed"],
+    legend: { position: "bottom" },
+    dataLabels: { enabled: false },
   };
 
-  return (
-    <div
-      className="p-4 rounded-xl border"
-      style={{ borderColor: "var(--border-color)" }}
-    >
-      <h3 className="text-lg font-semibold mb-3">Project Status</h3>
-      <Doughnut data={data} options={options} />
-    </div>
-  );
+  const series = [
+    statusCounts.Upcoming,
+    statusCounts["In Progress"],
+    statusCounts.Completed,
+  ];
+
+  return <Chart options={options} series={series} type="donut" height={250} />;
 };
 
 export default ProjectStatusChart;

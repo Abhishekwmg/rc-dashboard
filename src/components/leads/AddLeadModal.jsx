@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addLead } from "../../store/slices/leadsSlice";
 
-const AddLeadModal = ({ open, onClose, onAdd }) => {
+const AddLeadModal = ({ open, onClose }) => {
+  const dispatch = useDispatch();
   const [form, setForm] = useState({
     name: "",
     company: "",
@@ -17,7 +20,7 @@ const AddLeadModal = ({ open, onClose, onAdd }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onAdd(form);
+    dispatch(addLead(form)); // ✅ dispatch to Redux
     setForm({ name: "", company: "", email: "", capital: "", status: "New" });
     onClose();
   };
